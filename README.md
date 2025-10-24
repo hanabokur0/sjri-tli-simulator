@@ -1,5 +1,5 @@
 # sjri-tli-simulator
-# SJRI + TLI + REHI — Browser-Only Simulator (GitHub Pages)
+# SJRI + TLI + REHI — Browser-Only Simulator 
 
 **One-page web app. No server. No Python.**  
 Upload a CSV and get charts & CSV exports for:
