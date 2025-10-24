@@ -1,57 +1,65 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>SJRI + TLI Simulator</title>
+  <title>SJRI + TLI + REHI</title>
   <link rel="stylesheet" href="style.css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
   <header class="wrap">
-    <h1>SJRI + TLI Simulator</h1>
-    <p class="sub">Upload CSV → visualize scores → export.</p>
+    <h1>SJRI + TLI + REHI</h1>
+    <p class="sub">人が迷わず使える順序で：1) データ → 2) 列を合わせる → 3) 実行</p>
   </header>
 
   <main class="wrap grid">
+    <!-- 左：ステップ -->
     <section class="card">
-      <h3>Input</h3>
+      <h3>① データ</h3>
       <div class="row">
         <input id="fileInput" type="file" accept=".csv"/>
+        <button id="useSample" class="ghost">サンプルで試す</button>
+      </div>
+      <p class="hint">CSVを選ぶと、次の「② 列マッピング」が自動で出ます。</p>
+
+      <div id="mapBox" class="mapbox" style="display:none">
+        <h3>② 列マッピング</h3>
+        <div class="mapgrid" id="mapper"></div>
+        <p class="hint">あなたのCSVの列名を、下の必須項目に対応させてください。</p>
+      </div>
+
+      <div class="row" style="margin-top:12px">
+        <div><label>Max shock (%)</label><input id="maxShock" type="number" value="3" step="0.25"/></div>
+        <div><label>Step (%)</label><input id="stepShock" type="number" value="0.25" step="0.25"/></div>
+      </div>
+
+      <div class="row" style="margin-top:12px">
+        <button id="btnRun" disabled>③ 実行</button>
         <button id="btnReset" class="ghost">Reset</button>
       </div>
-      <p class="hint">
-        CSV headers: <code>Name,JGB_Ratio,Capital,Lag</code>
-      </p>
+
+      <div id="msg" class="msg" role="status"></div>
+    </section>
+
+    <!-- 右：結果 -->
+    <section class="card">
+      <h3>集約リスク（No TLI / With TLI）</h3>
+      <canvas id="chartAgg" height="180"></canvas>
     </section>
 
     <section class="card">
-      <h3>Scores</h3>
-      <canvas id="sjriChart" height="160"></canvas>
-      <div class="toolbar">
-        <button id="btnPng" class="ghost">Download PNG</button>
-        <button id="btnCsv" class="ghost">Download CSV</button>
-      </div>
+      <h3>REHI（地域 × 金利ショック）</h3>
+      <canvas id="chartRehi" height="180"></canvas>
     </section>
 
     <section class="card span2">
-      <h3>Table</h3>
-      <div class="tableWrap">
-        <table id="resultTable">
-          <thead><tr><th>Name</th><th>SJRI</th><th>TLI</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
+      <h3>要約</h3>
+      <div id="summary" class="summary"></div>
     </section>
   </main>
 
-  <footer class="wrap foot">Built with Chart.js</footer>
+  <footer class="wrap foot">Built for people first.</footer>
   <script src="script.js"></script>
 </body>
 </html>
-
-
-  <script src="script.js"></script>
-</body>
-</html>
-
